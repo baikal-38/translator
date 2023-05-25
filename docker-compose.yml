@@ -1,0 +1,24 @@
+# Версия docker-compose
+version: '4.19.0'
+# Список наших сервисов (контейнеров)
+services:
+    php_antlr4:
+        container_name: php_antlr4
+        build: ./images
+        ports:
+            - 80:80
+        # монтируем директорию с проектами
+        volumes:
+            - ./www:/var/www
+        #command: php -S 0.0.0.0:80
+        command: bash -c "pip install antlr4-tools 
+                       && composer require antlr/antlr4-php-runtime 
+                       && antlr4 -Dlanguage=PHP z_JSON.g4 
+                       && php -S 0.0.0.0:80 "
+
+#                && apt install openjdk-11-jre -y
+#                && apt-get install -y zip 
+#                && composer require antlr/antlr4-php-runtime 
+#                && antlr4 -Dlanguage=PHP z_JSON.g4"
+
+
